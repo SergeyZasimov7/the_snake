@@ -40,7 +40,9 @@ class GameObject:
     def __init__(self):
 
         """Конструктор класса, который инициализирует базовые атрибуты объекта,
+
         такие как его позиция и цвет.
+
         """
 
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
@@ -49,7 +51,9 @@ class GameObject:
     def draw(self):
 
         """Абстрактный метод, который предназначен для переопределения в
+
         дочерних классах
+
         """
 
         pass
@@ -58,13 +62,17 @@ class GameObject:
 class Apple(GameObject):
 
     """Класс, унаследованный от GameObject,
+
     описывающий змейку и её поведение.
+
     """
 
     def __init__(self, snake_positions=[list[tuple[int, int]]]):
 
         """Конструктор класса, который задает цвет яблока и вызывает метод
+
         randomize_position, чтобы установить начальную позицию яблока.
+
         """
 
         super().__init__()
@@ -75,8 +83,11 @@ class Apple(GameObject):
     def randomize_position(self, snake_positions):
 
         """Устанавливает случайное положение яблока на игровом поле —
+
         задаёт атрибуту position новое значение. Координаты выбираются так,
+
         чтобы яблоко оказалось в пределах игрового поля.
+
         """
 
         while True:
@@ -88,7 +99,7 @@ class Apple(GameObject):
 
     def draw(self, surface):
 
-        """Отрисовывает яблоко на игровой поверхности (есть в прекоде)"""
+        """Отрисовывает яблоко на игровой поверхности."""
 
         rect = pygame.Rect(
             (self.position[0], self.position[1]),
@@ -101,13 +112,17 @@ class Apple(GameObject):
 class Snake(GameObject):
 
     """Класс, унаследованный от GameObject,
+
     описывающий змейку и её поведение.
+
     """
 
     def __init__(self):
 
         """Конструктор класса, инициализирующий начальное состояние
-        змейки
+
+        змейки.
+
         """
 
         super().__init__()
@@ -128,8 +143,11 @@ class Snake(GameObject):
     def move(self):
 
         """Обновляет позицию змейки (координаты каждой секции), добавляя
+
         новую голову в начало списка positions и удаляя последний элемент,
+
         если длина змейки не увеличилась.
+
         """
 
         x, y = self.get_head_position()
@@ -187,14 +205,19 @@ class Snake(GameObject):
     def get_head_position(self):
 
         """Метод возвращает позицию головы змейки (1-й элемент в списке
-        positions)"""
+
+        positions)
+
+        """
 
         return self.positions[0]
 
     def reset(self):
 
         """Метод сбрасывает змейку в начальное состояние после столкновения с
+
         собой.
+
         """
 
         self.length = 1
@@ -225,7 +248,9 @@ def handle_keys(game_object):
 def main():
 
     """Обрабатывает нажатия клавиш, чтобы изменить направление движения
+
     змейки
+
     """
 
     # Создание экземпляров классов
