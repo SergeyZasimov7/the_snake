@@ -177,8 +177,7 @@ class Snake(GameObject):
         # Затирание последнего сегмента
         if self.last:
             last_rect = pygame.Rect(
-               (self.last[0], self.last[1]),
-               (GRID_SIZE, GRID_SIZE)
+               (self.last[0], self.last[1]), (GRID_SIZE, GRID_SIZE)
             )
             pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
 
