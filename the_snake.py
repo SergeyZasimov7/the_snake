@@ -124,15 +124,8 @@ class Snake(GameObject):
             self.direction = self.next_direction
             self.next_direction = None
 
-    def move(self):
-        """Обновляет позицию змейки (координаты каждой секции), добавляя
-
-        новую голову в начало списка positions и удаляя последний элемент,
-
-        если длина змейки не увеличилась.
-
-        """
-        x, y = self.get_head_position()
+    def head_direction(self, x, y):
+        """Метод изменения координат головы змеи"""
         if self.direction == RIGHT:
             x += GRID_SIZE
         elif self.direction == LEFT:
@@ -141,6 +134,10 @@ class Snake(GameObject):
             y -= GRID_SIZE
         elif self.direction == DOWN:
             y += GRID_SIZE
+        return x, y
+
+    def within_the_field(self, x, y):
+        """Метод сохранения змейки внутри игрового поля"""
         if self.direction in {RIGHT, LEFT}:
             if x >= SCREEN_WIDTH:
                 x = 0
@@ -151,6 +148,19 @@ class Snake(GameObject):
                 y = 0
             elif y < 0:
                 y = SCREEN_HEIGHT - GRID_SIZE
+        return x, y
+
+    def move(self):
+        """Обновляет позицию змейки (координаты каждой секции), добавляя
+
+        новую голову в начало списка positions и удаляя последний элемент,
+
+        если длина змейки не увеличилась.
+
+        """
+        x, y = self.get_head_position()
+        x, y = self.head_direction(x, y)
+        x, y = self.within_the_field(x, y)
         if (x, y) in self.positions:
             self.reset()
         else:
@@ -177,7 +187,7 @@ class Snake(GameObject):
         # Затирание последнего сегмента
         if self.last:
             last_rect = pygame.Rect(
-               (self.last[0], self.last[1]), (GRID_SIZE, GRID_SIZE)
+                (self.last[0], self.last[1]), (GRID_SIZE, GRID_SIZE)
             )
             pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
 
