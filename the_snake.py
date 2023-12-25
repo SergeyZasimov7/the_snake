@@ -35,6 +35,7 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры
 class GameObject:
     """Базовый класс, от которого наследуются другие игровые объекты."""
+
     def __init__(self):
         """Конструктор класса, который инициализирует базовые атрибуты объекта,
 
@@ -59,6 +60,7 @@ class Apple(GameObject):
     описывающий змейку и её поведение.
 
     """
+
     def __init__(self, snake_positions=[list[tuple[int, int]]]):
         """Конструктор класса, который задает цвет яблока и вызывает метод
 
@@ -79,8 +81,8 @@ class Apple(GameObject):
 
         """
         while True:
-            x = randint(0, GRID_WIDTH-1)*GRID_SIZE
-            y = randint(0, GRID_HEIGHT-1)*GRID_SIZE
+            x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+            y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
             if (x, y) not in snake_positions:
                 self.position = (x, y)
                 break
@@ -101,6 +103,7 @@ class Snake(GameObject):
     описывающий змейку и её поведение.
 
     """
+
     def __init__(self):
         """Конструктор класса, инициализирующий начальное состояние
 
@@ -116,7 +119,7 @@ class Snake(GameObject):
         self.last = None
 
     def update_direction(self):
-        """"Метод обновления направления после нажатия на кнопку."""
+        """Метод обновления направления после нажатия на кнопку."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
