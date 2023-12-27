@@ -19,15 +19,15 @@ LEFT = (-1, 0)
 RIGHT = (1, 0)
 
 DIRECTION_DICT = {
-        (UP, pygame.K_LEFT): LEFT,
-        (UP, pygame.K_RIGHT): RIGHT,
-        (DOWN, pygame.K_LEFT): LEFT,
-        (DOWN, pygame.K_RIGHT): RIGHT,
-        (LEFT, pygame.K_UP): UP,
-        (LEFT, pygame.K_DOWN): DOWN,
-        (RIGHT, pygame.K_UP): UP,
-        (RIGHT, pygame.K_DOWN): DOWN
-        }
+    (UP, pygame.K_LEFT): LEFT,
+    (UP, pygame.K_RIGHT): RIGHT,
+    (DOWN, pygame.K_LEFT): LEFT,
+    (DOWN, pygame.K_RIGHT): RIGHT,
+    (LEFT, pygame.K_UP): UP,
+    (LEFT, pygame.K_DOWN): DOWN,
+    (RIGHT, pygame.K_UP): UP,
+    (RIGHT, pygame.K_DOWN): DOWN
+    }
 
 BOARD_BACKGROUND_COLOR = (197, 197, 197)
 APPLE_COLOR = (255, 0, 0)
@@ -55,11 +55,11 @@ clock = pygame.time.Clock()
 
 class GameObject:
     """Базовый класс, от которого наследуются другие игровые объекты."""
+
 # В метод __init__ присваиваю значения по умолчанию из-за проверки
 # confest.py: Если в конструктор класса `GameObject` помимо параметра `self`
 # передаются какие-то ещё параметры - убедитесь, что для них установлены
 # значения по умолчанию.
-
     def __init__(self, position=None, color=None):
         """Конструктор класса, который инициализирует базовые атрибуты объекта,
         такие как его позиция и цвет.
