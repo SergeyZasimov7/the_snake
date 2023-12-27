@@ -27,7 +27,7 @@ DIRECTION_DICT = {
         (LEFT, pygame.K_DOWN): DOWN,
         (RIGHT, pygame.K_UP): UP,
         (RIGHT, pygame.K_DOWN): DOWN
-    }
+        }
 
 BOARD_BACKGROUND_COLOR = (197, 197, 197)
 APPLE_COLOR = (255, 0, 0)
@@ -59,6 +59,7 @@ class GameObject:
 # confest.py: Если в конструктор класса `GameObject` помимо параметра `self`
 # передаются какие-то ещё параметры - убедитесь, что для них установлены
 # значения по умолчанию.
+
     def __init__(self, position=None, color=None):
         """Конструктор класса, который инициализирует базовые атрибуты объекта,
         такие как его позиция и цвет.
@@ -103,6 +104,7 @@ class Apple(GameObject):
                 break
 
     def draw(self, surface):
+        """Отрисовывает яблоко."""
         self.cell_rendering(surface, self.position)
 
 
