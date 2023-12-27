@@ -27,7 +27,7 @@ DIRECTION_DICT = {
     (LEFT, pygame.K_DOWN): DOWN,
     (RIGHT, pygame.K_UP): UP,
     (RIGHT, pygame.K_DOWN): DOWN
-    }
+}
 
 BOARD_BACKGROUND_COLOR = (197, 197, 197)
 APPLE_COLOR = (255, 0, 0)
