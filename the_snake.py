@@ -1,9 +1,9 @@
 from random import choice, randint
-import pygame as pg
+import pygame  # Сократить на pg не дает тренажер из-за проверки conftest.py
 import sys
 
 # Инициализация PyGame
-pg.init()
+pygame.init()
 
 # Константы для размеров
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -35,10 +35,10 @@ MAX_SPEED = 60
 SPEED_INCREMENT = 5
 
 # Настройка игрового окна
-screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
 # Настройка времени
-clock = pg.time.Clock()
+clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры
@@ -56,11 +56,11 @@ class GameObject:
         """Метод для отрисовки одной ячейки"""
         if color is None:
             color = self.body_color
-        rect = pg.Rect(
+        rect = pygame.Rect(
             position,
             (GRID_SIZE, GRID_SIZE)
         )
-        pg.draw.rect(surface, color, rect)
+        pygame.draw.rect(surface, color, rect)
 
     def draw(self):
         """Абстрактный метод, который предназначен для переопределения в
@@ -164,13 +164,13 @@ class Snake(GameObject):
 
 def program_exit():
     """Выход из системы"""
-    pg.quit()
+    pygame.quit()
     sys.exit()
 
 
 def update_display_caption():
     """Функция обновления заголовка дисплея"""
-    pg.display.set_caption(
+    pygame.display.set_caption(
         f"Змейка | Скорость: {current_speed} | Рекорд: {record_length} |"
         f"+/-: изменение скорости | Esc: выход"
     )
@@ -180,33 +180,33 @@ def handle_keys(game_object):
     """Функция обработки действий пользователя"""
     global current_speed, record_length
     direction_dict = {
-        (UP, pg.K_DOWN): UP,
-        (DOWN, pg.K_UP): DOWN,
-        (LEFT, pg.K_RIGHT): LEFT,
-        (RIGHT, pg.K_LEFT): RIGHT,
-        (UP, pg.K_LEFT): LEFT,
-        (UP, pg.K_RIGHT): RIGHT,
-        (DOWN, pg.K_LEFT): LEFT,
-        (DOWN, pg.K_RIGHT): RIGHT,
-        (LEFT, pg.K_UP): UP,
-        (LEFT, pg.K_DOWN): DOWN,
-        (RIGHT, pg.K_UP): UP,
-        (RIGHT, pg.K_DOWN): DOWN
+        (UP, pygame.K_DOWN): UP,
+        (DOWN, pygame.K_UP): DOWN,
+        (LEFT, pygame.K_RIGHT): LEFT,
+        (RIGHT, pygame.K_LEFT): RIGHT,
+        (UP, pygame.K_LEFT): LEFT,
+        (UP, pygame.K_RIGHT): RIGHT,
+        (DOWN, pygame.K_LEFT): LEFT,
+        (DOWN, pygame.K_RIGHT): RIGHT,
+        (LEFT, pygame.K_UP): UP,
+        (LEFT, pygame.K_DOWN): DOWN,
+        (RIGHT, pygame.K_UP): UP,
+        (RIGHT, pygame.K_DOWN): DOWN
     }
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             program_exit()
-        elif event.type == pg.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             current_direction = game_object.direction
             game_object.direction = direction_dict.get((current_direction,
                                                         event.key),
                                                        current_direction)
-            if (event.key == pg.K_EQUALS or event.key == pg.K_PLUS
-               or event.key == pg.K_KP_PLUS):
+            if (event.key == pygame.K_EQUALS or event.key == pygame.K_PLUS
+               or event.key == pygame.K_KP_PLUS):
                 current_speed = min(MAX_SPEED, current_speed + SPEED_INCREMENT)
-            elif event.key == pg.K_MINUS or event.key == pg.K_KP_MINUS:
+            elif event.key == pygame.K_MINUS or event.key == pygame.K_KP_MINUS:
                 current_speed = max(MIN_SPEED, current_speed - SPEED_INCREMENT)
-            elif event.key == pg.K_ESCAPE:
+            elif event.key == pygame.K_ESCAPE:
                 program_exit()
     update_display_caption()
     game_object.update_direction(game_object.direction)
@@ -236,7 +236,7 @@ def main():
             apple = Apple(snake.positions)
             apple.randomize_position(snake.positions)
 
-        pg.display.update()
+        pygame.display.update()
 
 
 if __name__ == '__main__':
