@@ -1,6 +1,6 @@
-import sys
-
 from random import choice, randint
+
+import sys
 
 import pygame
 
@@ -63,7 +63,7 @@ class GameObject:
         """Абстрактный метод, который предназначен для переопределения в
         дочерних классах
         """
-        raise NotImplementedError(f'{self.__class__.__name__}this should never'
+        raise NotImplementedError(f'{type(self).__name__} this should never'
                                   ' happen')
 
 
@@ -118,9 +118,9 @@ class Snake(GameObject):
         """
         x, y = self.get_head_position()
         direction_x, direction_y = self.direction
-        position = (((x + direction_x * GRID_SIZE) % SCREEN_WIDTH),
-                    ((y + direction_y * GRID_SIZE) % SCREEN_HEIGHT))
-        if (position) in self.positions:
+        position = ((x + direction_x * GRID_SIZE) % SCREEN_WIDTH,
+                    (y + direction_y * GRID_SIZE) % SCREEN_HEIGHT)
+        if position in self.positions:
             self.crash = True
             self.reset()
         else:
@@ -132,8 +132,7 @@ class Snake(GameObject):
 
     def draw(self, surface):
         """Отрисовывает змейку на экране, затирая след."""
-        for position in self.positions:
-            self.cell_rendering(surface, position)
+        self.cell_rendering(surface, self.positions[0])
         if self.last_to_cut:
             self.cell_rendering(surface, self.last_to_cut,
                                 BOARD_BACKGROUND_COLOR)
@@ -171,18 +170,18 @@ def handle_keys(game_object):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             program_exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_F1:
-                speed = min(MAX_SPEED, speed + SPEED_INCREMENT)
-            elif event.key == pygame.K_F2:
-                speed = max(MIN_SPEED, speed - SPEED_INCREMENT)
-            elif event.key == pygame.K_ESCAPE:
-                program_exit()
-            else:
-                current_direction = game_object.direction
-                game_object.update_direction(DIRECTION_DICT.get(
-                    (current_direction, event.key), current_direction))
-            update_display_caption()
+        if event.type != pygame.KEYDOWN:
+            continue
+        current_direction = game_object.direction
+        game_object.update_direction(DIRECTION_DICT.get((current_direction,
+                                     event.key), current_direction))
+        if event.key == pygame.K_F1:
+            speed = min(MAX_SPEED, speed + SPEED_INCREMENT)
+        elif event.key == pygame.K_F2:
+            speed = max(MIN_SPEED, speed - SPEED_INCREMENT)
+        elif event.key == pygame.K_ESCAPE:
+            program_exit()
+        update_display_caption()
 
 
 def main():
@@ -199,12 +198,13 @@ def main():
         clock.tick(speed)
         handle_keys(snake)
         snake.move()
-        if snake.positions[0] == apple.position:
+        if snake.positions[0] == apple.position and not snake.crash:
             snake.length += 1
             record_length = max(record_length, snake.length)
             apple.randomize_position(snake.positions)
-        if snake.crash:
+        elif snake.crash:
             screen.fill(BOARD_BACKGROUND_COLOR)
+        print(snake.crash)
         update_display_caption()
         apple.draw(screen)
         snake.draw(screen)
